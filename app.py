@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 
 VERIFY_TOKEN = "rifat_data_entry_token_2026"
-PAGE_ACCESS_TOKEN = os.environ.get("PAGE_ACCESS_TOKEN", "EAAZa...YOUR_PAGE_TOKEN")
+PAGE_ACCESS_TOKEN = os.environ.get("PAGE_ACCESS_TOKEN", "EAAfml573upUBSpY4Kj59caZAuwBesXlqVTMk42O2THBvZAh3940bEwL4OstudvyqmAcZAICXgJec48Cd7ovTQdmhgubdP0hPib8XjVtN2uzYBSvSAwtLA94IHaXVgnoZCslflHxczs0TZBiZBnXQkL5YclQIRmRFVLcZB3LDVIZB7XZBC2xsx0WzElS0dVRuePlrT7yFbmyBUU1fCS1REkO246OgwvNuWYmKuNwh5k7Pnr11o8JWphv4fkM30ZCmnN4C9GB9MyFZBJsRZBFxZB2gmZAe0N7hXP")
 
 def send_messenger_reply(recipient_id, message_text):
     """Sends an engaging, client-focused conversational reply for Data Entry jobs."""
