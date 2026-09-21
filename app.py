@@ -8,15 +8,16 @@ VERIFY_TOKEN = "rifat_data_entry_token_2026"
 PAGE_ACCESS_TOKEN = os.environ.get("PAGE_ACCESS_TOKEN", "EAAZa...YOUR_PAGE_TOKEN")
 
 def send_messenger_reply(recipient_id, message_text):
-    """Sends a conversational reply back to the user on Facebook Messenger."""
-    url = f"https://graph.facebook.com/v18.0/me/messages?access_token={PAGE_ACCESS_TOKEN}"
+    """Sends an engaging, client-focused conversational reply for Data Entry jobs."""
+    url = "https://graph.facebook.com/v18.0/me/messages"
+    params = {"access_token": PAGE_ACCESS_TOKEN}
     payload = {
         "recipient": {"id": recipient_id},
         "message": {"text": message_text}
     }
     headers = {"Content-Type": "application/json"}
     try:
-        response = requests.post(url, json=payload, headers=headers, timeout=10)
+        response = requests.post(url, params=params, json=payload, headers=headers, timeout=10)
         print("Messenger API Response:", response.status_code, response.text)
         return response.json()
     except Exception as e:
@@ -48,27 +49,25 @@ def webhook():
                 for messaging_event in entry.get("messaging", []):
                     sender_id = messaging_event.get("sender", {}).get("id")
                     
-                    # Handle incoming text messages
                     if messaging_event.get("message") and not messaging_event["message"].get("is_echo"):
                         message_text = messaging_event["message"].get("text", "")
                         print(f"Received message from {sender_id}: {message_text}")
                         
-                        # Generate conversational multi-turn response for data entry inquiries
+                        # Client hunting & Job-taking response: inviting clients to assign data entry work
                         reply_text = (
-                            "Hello! Welcome to Rifat's Data Entry service (Page ID: 1237613292776083). "
-                            "We provide professional, accurate, and prompt data entry services. "
-                            "How can I help you today? Please share your project details or requirements."
+                            "Hello! Thanks for reaching out to Rifat's Data Entry service (Page: Robiul Islam). "
+                            "We are ready to take your data entry projects, Excel spreadsheets, copy-paste tasks, and data processing work with 100% accuracy and fast delivery. "
+                            "Please share your project details, file samples, or budget so we can start right away!"
                         )
                         send_messenger_reply(sender_id, reply_text)
                         
-                    # Handle postback events (get started buttons, etc.)
                     elif messaging_event.get("postback"):
                         payload_text = messaging_event["postback"].get("payload", "")
                         print(f"Received postback from {sender_id}: {payload_text}")
-                        reply_text = "Welcome! Let's get started on your data entry project. Please tell me more about what you need."
+                        reply_text = "Welcome! We are ready to take your data entry projects. Tell us what tasks you need completed!"
                         send_messenger_reply(sender_id, reply_text)
 
-        return "EVENT_RECEIVED", 200
+        return "EVENT_REGISTERED", 200
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
